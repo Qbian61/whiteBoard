@@ -17,7 +17,7 @@
 
 # 效果图
 
-![获取access_token](./img/share-wechat/获取access_token.jpeg)
+![http://127.0.0.1:3000/login.html](https://raw.githubusercontent.com/Qbian61/Qbian61.github.io/master/resource/qbian-express/login.png)
 
 ![获取access_token](./img/share-wechat/获取access_token.jpeg)
 
