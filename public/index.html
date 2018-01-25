@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>qbian-白板</title>
+    <link rel="stylesheet" href="css/whiteBoard.css">
+</head>
+<body>
+    <!-- 画室 -->
+    <div class="board">
+        <!-- 画板 -->
+        <canvas id="canvas" class="canvas-line canvas">浏览器不支持canvas</canvas>
+
+        <div id="opts" class="opts">
+            <div class="opts-layer">
+                <div class="setting">
+                    <span id="setColor" class="setColor"></span>
+                    <span id="setLineWidth" class="setSize"></span>
+                    <!-- 画笔颜色 -->
+                    <div class="setColor-layer" id="color" >
+                        <ul>
+                            <li class="color-item col_red" style="background-color: #000"></li>
+                            <li class="color-item col_red" style="background-color: #d1021c"></li>
+                            <li class="color-item col_red" style="background-color: #fddc01"></li>
+                            <li class="color-item col_red" style="background-color: #7dd21f"></li>
+                            <li class="color-item col_red" style="background-color: #228bf8"></li>
+                            <li class="color-item col_red" style="background-color: #9b0df5"></li>
+                            <li class="color-item col_red" style="background-color: #7a3e3e"></li>
+                            <li class="color-item col_red" style="background-color: #f443ab"></li>
+                            <li class="color-item col_red" style="background-color: #b9fd01"></li>
+                            <li class="color-item col_red" style="background-color: #1cb114"></li>
+                            <li class="color-item col_red" style="background-color: #135b88"></li>
+                            <li class="color-item col_red" style="background-color: #1516bd"></li>
+                        </ul>
+                    </div>
+                    <!-- 线条宽度 -->
+                    <div class="setSize-layer" id="lineWidth">
+                        <ul>
+                            <li class="line-item col_size">2</li>
+                            <li class="line-item col_size">4</li>
+                            <li class="line-item col_size">6</li>
+                            <li class="line-item col_size">8</li>
+                            <li class="line-item col_size">10</li>
+                            <li class="line-item col_size">12</li>
+                            <li class="line-item col_size">20</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="line" class="opt line" title="画笔"></div>
+                <div id="straightLine" class="opt straightLine" title="直线"></div>
+                <div id="rect" class="opt rect" title="矩形"></div>
+                <div id="round" class="opt round" title="圆形"></div>
+                <div id="text" class="opt text" title="填写文本后，点击绘制"></div>
+                <div id="delete" class="opt delete" title="选中后高亮，点击删除"></div>
+                <div id="undo" class="opt back" title="撤回上一步"></div>
+                <div id="backImg" class="opt backImg" title="更换背景"></div>
+                <div id="clearAll" class="opt clear" title="清空"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="./socket.io/socket.io.js" charset="utf-8"></script>
+    <script src="./js/UUID.js" charset="utf-8"></script>
+    <script src="./js/qbian.js" charset="utf-8"></script>
+    <script src="./js/Canvas.js" charset="utf-8"></script>
+    <script src="./js/index.js" charset="utf-8"></script>
+
+</body>
+</html>

@@ -1,0 +1,186 @@
+* {
+    padding: 0;
+    border: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body {
+    padding: 0;
+    border: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+.board ul,.board li{
+    list-style: none;
+}
+.board{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+}
+.board .canvas{
+    /* width: 100%; */
+    /* height: 100%; */
+}
+.board .opts{
+    width: 360px;
+    left: 50%;
+    transform: translateX(-50%);
+    position: fixed;
+    bottom: 20px;
+}
+.board .opts-layer{
+    width: 360px;
+    height: 32px;
+    line-height: 32px;
+    background-color: rgba(0,0,0,0.64);
+    border-radius: 5px;
+    margin: 0 auto;
+    padding-left: 7px;
+}
+.board .opt{
+    width: 34px;
+    float: left;
+    height: 100%;
+    border-right: 1px solid #4e4e4e;
+    background: url("../images/whiteboard_bg.png") no-repeat;
+}
+.board .opt:last-child{
+    border: none;
+}
+.board .opt:hover{
+    background-color: rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+.board .setting{
+    min-width: 36px;
+    float: left;
+    height: 100%;
+    border-right: 1px solid #4e4e4e;
+    position: relative;
+    padding-right: 12px;
+}
+.board .setColor{
+    width: 13px;
+    height: 13px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    vertical-align: middle;
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 6px;
+}
+.board .setSize{
+    color: #fff;
+    display: inline-block;
+    font-size: 12px;
+    font-family: arial;
+    cursor: pointer;
+    width: 9px;
+    text-align: center;
+}
+.board .line{
+   background-position: 0px 0px;
+}
+.board .straightLine{
+    background-position: -34px 0px;
+}
+.board .rect{
+    background-position: -68px 0px;
+}
+.board .round{
+    background-position: -104px 0px;
+}
+.board .text{
+    background-position: -136px 0px;
+}
+.board .delete{
+    background-position: -168px 0px;
+}
+.board .back{
+    background-position: -200px 0px;
+}
+.board .clear{
+    background-position: -234px 0px;
+}
+.board .backImg{
+    background-position: -269px 0px;
+}
+.board .setColor-layer,
+.board .setSize-layer{
+    position: absolute;
+    width: 160px;
+    height: 27px;
+    left:-70px;
+    top:-40px;
+    border: 1px solid #bebebe;
+    border-radius: 3px;
+    box-shadow: 0px 1px 7px #b9b9b9;
+    background-color: #fff;
+    display: none;
+}
+.board .setSize-layer{
+    left: -56px;
+}
+.board .setColor-layer::after,
+.board .setSize-layer::after{
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-bottom: 1px solid #bebebe;
+    border-right:1px solid #bebebe;
+    position: absolute;
+    top:20px;
+    left:70px;
+    background-color: #fff;
+    transform: rotate(45deg);
+}
+.board .setColor-layer li{
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    float: left;
+    margin: 6px 6px 3px;
+}
+.board .setSize-layer li{
+    float: left;
+    line-height:27px;
+    color: #9e9e9e;
+    font-size: 12px;
+    text-align: center;
+    margin-left: 11px;
+}
+.board .setSize-layer li:hover{
+    cursor: pointer;
+    color: #333;
+}
+.board .setColor-layer{
+    height: 54px;
+    top:-67px;
+}
+.board .setColor-layer::after{
+    top:47px;
+}
+.board .setColor-layer .col_red{
+
+}
+.canvas-line {
+    cursor: url('../images/cursors/path.png'), auto;
+}
+.canvas-straightLine {
+    cursor: url('../images/cursors/line.png'), auto;
+}
+.canvas-rect {
+    cursor: url('../images/cursors/rectangle.png'), auto;
+}
+.canvas-round {
+    cursor: url('../images/cursors/circle.png'), auto;
+}
+.canvas-text{
+    cursor: url('../images/cursors/text.png'), auto;
+}
+.canvas-delete {
+    cursor: url('../images/cursors/eraser.png'), auto;
+}
