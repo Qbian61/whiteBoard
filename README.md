@@ -17,9 +17,9 @@
 
 # 效果图
 
-![http://127.0.0.1:3000/login.html](https://raw.githubusercontent.com/Qbian61/Qbian61.github.io/master/resource/qbian-express/login.png)
+![示例图－1](https://raw.githubusercontent.com/Qbian61/whiteBoard/master/%E6%88%AA%E5%9B%BE/whiteboard-1.jpeg)
 
-![获取access_token](./img/share-wechat/获取access_token.jpeg)
+![示例图－2（有背景图片）](https://raw.githubusercontent.com/Qbian61/whiteBoard/master/%E6%88%AA%E5%9B%BE/whiteboard-2.jpeg)
 
 # 启动步骤
 
