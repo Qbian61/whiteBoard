@@ -1,5 +1,7 @@
 # whiteBoard
 
+可访问地址： http://qbian.me:8082/
+
 功能列表：
 
 - 改变线条颜色
