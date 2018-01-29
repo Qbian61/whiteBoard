@@ -4,7 +4,7 @@ window.qbian = window.qbian || {};
     'use strict';
 
     // 自定义日志
-    var log = window.qbian.logger('board');
+    var log = window.qbian.logger('index');
 
     // ========================== 获取页面 id
     var pathname = window.qbian.config.pathname;
