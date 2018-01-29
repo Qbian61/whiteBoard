@@ -14,14 +14,17 @@
 - 橡皮擦
 - 撤销上一步
 - 清空画板
-- 设置画板背景图片
+- 上传画板背景图片，图片仓库管理。
 - 访问地址后跟上查询参数 ?id=roomId 可进入自定义房间免受其他用户干扰
+- 画布等比缩放
 
 # 效果图
 
 ![示例图－1](https://raw.githubusercontent.com/Qbian61/whiteBoard/master/%E6%88%AA%E5%9B%BE/whiteboard-1.jpeg)
 
 ![示例图－2（有背景图片）](https://raw.githubusercontent.com/Qbian61/whiteBoard/master/%E6%88%AA%E5%9B%BE/whiteboard-2.jpeg)
+
+![示例图－3（有背景图片）](https://raw.githubusercontent.com/Qbian61/whiteBoard/master/%E6%88%AA%E5%9B%BE/whiteboard-3.jpeg)
 
 # 启动步骤
 
