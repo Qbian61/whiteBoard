@@ -24,7 +24,7 @@
 
 ![示例图－2（有背景图片）](https://raw.githubusercontent.com/Qbian61/whiteBoard/master/%E6%88%AA%E5%9B%BE/whiteboard-2.jpeg)
 
-![示例图－3（有背景图片）](https://raw.githubusercontent.com/Qbian61/whiteBoard/master/%E6%88%AA%E5%9B%BE/whiteboard-3.jpeg)
+![示例图－3（有背景图片）](https://raw.githubusercontent.com/Qbian61/whiteBoard/master/%E6%88%AA%E5%9B%BE/whiteboard-3.png)
 
 # 启动步骤
 
