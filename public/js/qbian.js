@@ -148,8 +148,8 @@ window.qbian = window.qbian || {};
 
     // 配置信息
     qbian.config = {
-        wsUrl: 'ws://106.14.5.48:8082',
-        whiteBgImgUrl: 'http://106.14.5.48:8082/images/white_bg.png',
+        wsUrl: 'ws://127.0.0.1:8082',
+        whiteBgImgUrl: 'http://127.0.0.1:8082/images/white_bg.png',
         outputLog: true,
         pathname: pathname
     };
