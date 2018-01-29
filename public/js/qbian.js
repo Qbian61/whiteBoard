@@ -123,10 +123,9 @@ window.qbian = window.qbian || {};
     };
 
     // 是否是网络图片地址
+    var allPicTypes = ['jpg', 'png', 'jpeg'];
     qbian.isNetWorkPicUrl = function(strPicUrl) {
         if(strPicUrl.indexOf('http') === 0 && strPicUrl.indexOf('.') > 0) {
-            var allPicTypes = ['jpg', 'png', 'jpeg'];
-
             var picUrls = strPicUrl.split('.');
             return allPicTypes.indexOf(picUrls[picUrls.length - 1]) > -1;
         }
