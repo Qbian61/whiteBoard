@@ -262,7 +262,10 @@ window.qbian = window.qbian || {};
     var filePathDom = document.getElementById('filePath');
     document.getElementById('uploadBtn').addEventListener('click', function() {
         var filePath = filePathDom.value;
-        if(qbian.isNetWorkPicUrl(filePath))  return emit(new window.qbian.Image(filePath));
+        if(qbian.isNetWorkPicUrl(filePath)) {
+            emit(new window.qbian.Image(filePath))
+            return filePathDom.value = '';
+        } 
         alert('添加的网络图片地址不在定义范围（jpg, png, jpeg）内');
     }, false);
 
