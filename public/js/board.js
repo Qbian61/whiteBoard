@@ -1,25 +1,23 @@
-(function() {
+window.qbian = window.qbian || {};
+
+(function(qbian) {
     'use strict';
 
-    // ========================== 获取页面 id
-    var search = location.search,
-        pathname = '';
-    if(search && search.indexOf('=') > 0) {
-        var querys = search.substr(1, search.length).split('&');
-        for(var i = 0, len = querys.length; i < len; ++ i) {
-            if(querys[i].split('=')[0] === 'id') {
-                pathname = querys[i].split('=')[1];
-                break;
-            }
-        }
-    }
+    // 自定义日志
+    var log = window.qbian.logger('board');
 
-    // var canvasBox = document.getElementById('canvasBox');
-    var canvasBackImages = [],
-        canvasDom = document.getElementById('canvas'),
+    // ========================== 获取页面 id
+    var pathname = window.qbian.config.pathname;
+    
+    var canvasDom = document.getElementById('canvas'),
         cvsW, cvsH,
         canvas = new window.qbian.Canvas(canvasDom, canvasDom.getContext('2d')),
-        socket = io.connect('ws://127.0.0.1:8082');
+        imageCache = new window.qbian.ImageCache(pathname, document.getElementById('imgBox')),
+        socket = io.connect(qbian.config.wsUrl);
+
+    log('id=' +pathname+ ' 缓存的本地图片：', imageCache.getImages());
+
+    window.qbian.socket = socket;
 
     socket.on('clearAll', function(d) {
         if(pathname !== d.pathname) return;
@@ -29,10 +27,12 @@
     socket.on('drawing', function(d) {
         if(pathname !== d.pathname) return;
         if(d.type === 'image') {
-            canvasBackImages.push(d);
             canvasDom.style.background = 'url('+ d.url +') no-repeat center';
             canvasDom.style.backgroundSize = 'contain';
-            return ;
+            return imageCache.addImage(d);
+        }
+        if(d.type === 'deleteImage') {
+            return imageCache.removeImage(d);
         }
         canvas.drawing(d);
     });
@@ -41,6 +41,25 @@
     document.getElementById('clearAll').addEventListener('click', function() {
         socket.emit('clearAll', {pathname});
     }, false);
+
+    // ========================== 改变线条颜色、更新画笔颜色
+    var lineColor = '#000',
+        setColorDom = document.getElementById('setColor'),
+        colorDom =  document.getElementById('color'),
+        colorDoms = document.getElementsByClassName('color-item');
+    setColorDom.style.backgroundColor = lineColor;
+
+    setColorDom.addEventListener('click', function(e) {
+        colorDom.style.display = colorDom.style.display === 'block' ? 'none' : 'block';
+    }, false);
+
+    for (var i = 0; i < colorDoms.length; i++){
+        colorDoms[i].addEventListener('click', function(e) {
+            lineColor = e.target.style.backgroundColor;
+            setColorDom.style.backgroundColor = lineColor;
+            hideAll();
+        }, false);
+    }
 
     // ========================== 改变线条粗细
     var lineWidth = 2,
@@ -56,8 +75,8 @@
     for (var i = 0; i < lineDoms.length; i++){
         lineDoms[i].addEventListener('click', function(e) {
             lineWidth = e.target.innerHTML;
-            lineWidthDom.style.display = 'none';
             setLineWidth.innerHTML = lineWidth;
+            hideAll();
         }, false);
     }
 
@@ -103,30 +122,10 @@
         log('输入的文本内容', content);
     }, false);
 
-    // ========================== 改变线条颜色、更新画笔颜色
-    var lineColor = '#000',
-        setColorDom = document.getElementById('setColor'),
-        colorDom =  document.getElementById('color'),
-        colorDoms = document.getElementsByClassName('color-item');
-    setColorDom.style.backgroundColor = lineColor;
-
-    setColorDom.addEventListener('click', function(e) {
-        colorDom.style.display = colorDom.style.display === 'block' ? 'none' : 'block';
-    }, false);
-
-    for (var i = 0; i < colorDoms.length; i++){
-        colorDoms[i].addEventListener('click', function(e) {
-            lineColor = e.target.style.backgroundColor;
-            colorDom.style.display = 'none';
-            setColorDom.style.backgroundColor = lineColor;
-        }, false);
-    }
-
     // ========================== 在 canvas 内，按下鼠标事件
     var drawing = false;
     canvasDom.addEventListener('mousedown', function(event) {
-        lineWidthDom.style.display = 'none';
-        colorDom.style.display = 'none';
+        hideAll();
 
         // 删除
         if(delet && container.selected.id) {
@@ -178,7 +177,7 @@
                 x: (event.clientX+document.documentElement.scrollLeft+document.body.scrollLeft - canvasDom.offsetLeft)/cvsW,
                 y: (event.clientY+document.documentElement.scrollTop+document.body.scrollTop - canvasDom.offsetTop)/cvsH
             };
-            log('onmousemove endDot ==>', endDot);
+            // log('onmousemove endDot ==>', endDot);
             
             // 直线
             if(polygon === 2) {
@@ -254,11 +253,67 @@
     }, false);
     
     // ========================== 更换背景
-    document.getElementById('backImg').addEventListener('click', function() {
-        var imgUrl = prompt('在下面输入网络图片地址');
-        if(!imgUrl) return;
-        emit(new qbian.Image(imgUrl));
+    var imgDom = document.getElementById('imgs');
+    document.getElementById('setImage').addEventListener('click', function() {
+        imgDom.style.display = imgDom.style.display === 'block' ? 'none' : 'block';
+        filePathDom.focus();
     }, false);
+
+    var filePathDom = document.getElementById('filePath');
+    document.getElementById('uploadBtn').addEventListener('click', function() {
+        var filePath = filePathDom.value;
+        if(qbian.isNetWorkPicUrl(filePath))  return emit(new window.qbian.Image(filePath));
+        alert('添加的网络图片地址不在定义范围（jpg, png, jpeg）内');
+    }, false);
+
+    function imageDomClick(e) {
+        log('更换背景图, url=' + e.target.src);
+        e.stopPropagation();
+        var src = e.target.src;
+        if(!src) return; 
+        emit(new qbian.Image(src));
+        hideAll();
+    }
+    function imageDltDomClick(e) {
+        log('删除背景图, url=' + e.target.dataset.url);
+        e.stopPropagation();
+        imageCache.removeImage(new qbian.DeleteImage(e.target.dataset.url));
+    }
+    function bindImagesEv() {
+        var imageDoms = document.getElementsByClassName('image-item');
+        var imagedltDoms = document.getElementsByClassName('image-item-delete');
+        
+        for (var i = 0; i < imageDoms.length; i++){
+            imageDoms[i].removeEventListener('click', imageDomClick, false);
+            imageDoms[i].addEventListener('click', imageDomClick, false);
+            
+            
+            (function(i) {
+                if(imageDoms[i].src === window.qbian.config.whiteBgImgUrl) return; // 默认图片不显示可删除按钮
+
+                imageDoms[i].addEventListener('mouseover', function(e) {
+                    imagedltDoms[i].style.display = 'block';
+                }, false);
+    
+                imageDoms[i].addEventListener('mouseout', function(e) {
+                    imagedltDoms[i].style.display = 'none';
+                }, false);
+
+                imagedltDoms[i].addEventListener('mouseover', function(e) {
+                    imagedltDoms[i].style.display = 'block';
+                }, false);
+
+                imagedltDoms[i].addEventListener('mouseout', function(e) {
+                    imagedltDoms[i].style.display = 'none';
+                }, false);
+            })(i);
+
+            imagedltDoms[i].removeEventListener('click', imageDltDomClick, false);
+            imagedltDoms[i].addEventListener('click', imageDltDomClick, false);
+        }
+    }
+    bindImagesEv();
+    window.qbian.bus.on('updateImages', bindImagesEv);
 
     // 移动鼠标，选中画布上元素
     canvasDom.addEventListener('mousemove', function(event) {
@@ -357,10 +412,18 @@
     });
 
     // ========================== 监听窗口重置大小事件
+    var wh = 6/3;
     window.addEventListener('resize', onResize, false);
     function onResize() {
-        canvasDom.width = window.visualViewport.width;
-        canvasDom.height = window.innerHeight;
+        if(window.visualViewport.width / window.innerHeight > wh) { // 太宽了，以高为基准
+            canvasDom.height = window.innerHeight;
+            canvasDom.width = window.innerHeight * wh;
+        } else { // 太高了，以宽为基准
+            canvasDom.width = window.visualViewport.width;
+            canvasDom.height = window.visualViewport.width / wh;
+        }
+        canvasDom.style.marginLeft = (window.visualViewport.width - canvasDom.width) / 2 +'px';
+        
         log('canvasDom.width='+canvasDom.width,'canvasDom.height='+canvasDom.height);
         cvsW = canvasDom.width;
         cvsH = canvasDom.height;
@@ -386,8 +449,12 @@
         }
     }
 
-    function log(...param) {
-    //   console.info(...param);
+    // ========================== 隐藏全部弹出框
+    function hideAll() {
+        lineWidthDom.style.display = 'none';
+        colorDom.style.display = 'none';
+        imgDom.style.display = 'none';
     }
 
-})();
+
+})(window.qbian);

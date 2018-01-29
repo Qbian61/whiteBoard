@@ -21,8 +21,8 @@ body {
     overflow: hidden;
 }
 .board .canvas{
-    /* width: 100%; */
-    /* height: 100%; */
+    border: 1px solid #4e4e4e;
+    /* margin: 0 auto; */
 }
 .board .opts{
     width: 360px;
@@ -32,7 +32,7 @@ body {
     bottom: 20px;
 }
 .board .opts-layer{
-    width: 360px;
+    width: 362px;
     height: 32px;
     line-height: 32px;
     background-color: rgba(0,0,0,0.64);
@@ -105,9 +105,63 @@ body {
 .board .clear{
     background-position: -234px 0px;
 }
-.board .backImg{
-    background-position: -269px 0px;
+.board .setImageNo{
+   background: none;
+   position: relative;
 }
+.board .setImagePic{
+    background-position: -269px 0px;
+    position: relative;
+}
+.board .setImage-layer {
+    position: absolute;
+    width: 400px;
+    height: 220px;
+    left: -186px;
+    bottom: 47px;
+    border: 1px solid #bebebe;
+    border-radius: 3px;
+    box-shadow: 0px 1px 7px #b9b9b9;
+    background-color: #fff;
+    display: none;
+}
+.imgBox{
+    width: 100%;
+    height: 172px;
+    overflow-y: auto;
+    padding-top: 5px;
+}
+.img-opt {
+    border-bottom: 1px solid #b9b9b9;
+    width: 100%;
+    height: 35px;
+}
+.image-item-box {
+    position: relative;
+    display: block;
+    float: left;
+}
+.image-item-delete{
+    position: absolute;
+    top: -2px;
+    right: -3px;
+    display: none;
+    width: 22px;
+    height: 23px;
+    background: url("../images/delPic.png") no-repeat;
+    background-position: 0px 0px;
+}
+.image-item {
+    display:block;
+    width:50px;
+    height:50px;
+    float:left;
+    margin:5px 0 0 4px;
+}
+.image-item:hover{
+    border: 1px solid #b9b9b9;
+}
+
 .board .setColor-layer,
 .board .setSize-layer{
     position: absolute;
@@ -122,8 +176,9 @@ body {
     display: none;
 }
 .board .setSize-layer{
-    left: -56px;
+    left: -48px;
 }
+.board .setImage-layer::after,
 .board .setColor-layer::after,
 .board .setSize-layer::after{
     content: "";
@@ -132,10 +187,13 @@ body {
     border-bottom: 1px solid #bebebe;
     border-right:1px solid #bebebe;
     position: absolute;
-    top:20px;
     left:70px;
+    bottom: -6px;
     background-color: #fff;
     transform: rotate(45deg);
+}
+.board .setImage-layer::after{
+    left: 195px;
 }
 .board .setColor-layer li{
     width: 14px;
@@ -157,14 +215,24 @@ body {
     color: #333;
 }
 .board .setColor-layer{
-    height: 54px;
-    top:-67px;
+    height: 73px;
+    top: -85px;
 }
 .board .setColor-layer::after{
-    top:47px;
+    top: 66px;
 }
 .board .setColor-layer .col_red{
-
+    cursor: pointer;
+}
+.file-path{
+    width: 292px;
+    height: 30px;
+    margin-left: 2px;
+}
+.file-path-btn {
+    width: 99px; 
+    height: 30px;
+    cursor: pointer;
 }
 .canvas-line {
     cursor: url('../images/cursors/path.png'), auto;
@@ -183,4 +251,7 @@ body {
 }
 .canvas-delete {
     cursor: url('../images/cursors/eraser.png'), auto;
+}
+.setImage-layer{
+
 }

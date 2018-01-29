@@ -1,6 +1,7 @@
 
 window.qbian = window.qbian || {};
-window.qbian.Canvas = (function() {
+window.qbian.Canvas = (function(qbian) {
+    'use strict';
 
     var canvas,
         context,
@@ -12,10 +13,8 @@ window.qbian.Canvas = (function() {
                 extensionWidth: 1,
                 lineColor: 'red'//'#00ff00'
             },
-            backImages: [],
             session: {}
         };
-        
 
     function Canvas(cvs, ctx) {
         canvas = cvs;
@@ -130,10 +129,5 @@ window.qbian.Canvas = (function() {
         }
     }
 
-    // 输出日志
-    function log(...param) {
-        // console.info(...param);
-    }
-
     return Canvas;
-})();
+})(window.qbian);
